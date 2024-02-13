@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IFuncionarioInterface, FuncionarioService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => { //Conectando o banco 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); //builder.Configuration acesso o arquivo appsettings
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MarcoConnection")); //builder.Configuration acesso o arquivo appsettings
 });
 
 // Adiciona o serviço CORS com uma política específica
