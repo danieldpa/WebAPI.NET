@@ -14,12 +14,25 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IFuncionarioInterface, FuncionarioService>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => { //Conectando o banco 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MarcoConnection")); //builder.Configuration acesso o arquivo appsettings
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); //builder.Configuration acesso o arquivo appsettings
 });
 
-
+// Adiciona o serviço CORS com uma política específica
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDevOrigin",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
 
 var app = builder.Build();
+
+// Configura o uso do CORS com a política definida
+app.UseCors("AllowAngularDevOrigin");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
